@@ -1,31 +1,36 @@
 
-
-class TriangleError < StandardError
-end
-
 class Triangle
-  # write code here
-end 
 
-  attr_accessor :a, :b, :c
+attr_accessor :one, :two, :three
 
-  def initialize(a, b, c)
-    @a, @b, @c = a, b, c
+  def initialize(one, two, three)
+    @one = one
+    @two = two
+    @three = three
   end
 
   def kind
-    min, min2, max = [@a, @b, @c].sort
-    if @a < 0 || @b < 0 || @c < 0 || min + min2 <= max
-      raise TriangleError
-    end
+    illegal_triangle
 
-    if @a == @b && @b == c
+    if one == two && one == three
       :equilateral
-    elsif @a == @b || @a == @c || @b == @c
+    elsif one == two || one == three || two == three
       :isosceles
     else
       :scalene
     end
   end
 
+  def illegal_triangle
+    if one <= 0 || two <= 0 || three <= 0
+        raise TriangleError
+    elsif one == nil || two == nil || three == nil
+        raise TriangleError
+    elsif one + two <= three || one + three <= two || three + two <= one
+        raise TriangleError
+    end
+  end
+
+  class TriangleError < StandardError
+  end
 end
